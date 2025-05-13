@@ -8,7 +8,7 @@ services:
     container_name: cinema-api
     env_file: .env
     ports:
-      - "8000:8000"
+      - "3000:3000"
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

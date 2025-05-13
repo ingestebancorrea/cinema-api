@@ -3,10 +3,11 @@ FROM node:16
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-COPY . .
+COPY src ./src
+COPY .env ./
 
-RUN npm install
+RUN npm install --production
 
-EXPOSE 8000
+EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
