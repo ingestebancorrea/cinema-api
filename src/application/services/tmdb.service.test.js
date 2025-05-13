@@ -1,5 +1,5 @@
 const axios = require('axios');
-const fetchMoviesFromTMDB = require('../../application/services/tmdb.service');
+const { fetchMoviesFromTMDB } = require('./tmdb.service');
 
 jest.mock('axios');
 

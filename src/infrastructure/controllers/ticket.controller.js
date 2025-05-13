@@ -6,11 +6,11 @@ const ticketRepository = new TicketRepositoryImpl();
 const functionRepository = new FunctionRepositoryImpl();
 const ticketUseCase = new TicketUseCase(ticketRepository, functionRepository);
 
-const reserveTicket = async (req, res) => {
+const reserveTicket = (ticketUseCaseInstance = ticketUseCase) => async (req, res) => {
     try {
         const { functionId, buyer } = req.body;
 
-        const ticket = await ticketUseCase.reserve({ functionId, buyer });
+        const ticket = await ticketUseCaseInstance.reserve({ functionId, buyer });
 
         res.status(201).json(ticket);
     } catch (error) {

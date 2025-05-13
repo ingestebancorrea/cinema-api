@@ -5,7 +5,6 @@ class TicketUseCase {
     }
 
     async reserve({ functionId, buyer }) {
-        // Inicia una transacción para evitar condiciones de carrera
         return await this.functionRepository.transaction(async (transaction) => {
             const func = await this.functionRepository.findById(functionId, { transaction });
             if (!func) {
