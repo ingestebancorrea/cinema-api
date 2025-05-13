@@ -14,8 +14,8 @@ Antes de levantar el proyecto, asegúrate de tener instalados los siguientes com
 
 1. Clona este repositorio en tu máquina local:
     ```bash
-    git clone <URL_DEL_REPOSITORIO>
-    cd <NOMBRE_DEL_PROYECTO>
+    git clone https://github.com/ingestebancorrea/cinema-api.git
+    cd cinema-api
     ```
 
 2. Instala las dependencias del proyecto:
