@@ -1,0 +1,185 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CINEMA API",
+        "version": "1.0.0",
+        "description": "API para gestionar funciones de cine, reservas de boletas y películas."
+    },
+    "components": {
+        "schemas": {
+            "CreateFunction": {
+                "type": "object",
+                "properties": {
+                    "movieId": {
+                        "type": "integer",
+                        "description": "ID de la película asociada a la función"
+                    },
+                    "room": {
+                        "type": "string",
+                        "description": "Sala donde se llevará a cabo la función"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Fecha de la función (YYYY-MM-DD)"
+                    },
+                    "time": {
+                        "type": "string",
+                        "format": "time",
+                        "description": "Hora de la función (HH:mm:ss)"
+                    },
+                    "totalCapacity": {
+                        "type": "integer",
+                        "description": "Capacidad total de la sala"
+                    }
+                },
+                "required": ["movieId", "room", "date", "time", "totalCapacity"]
+            },
+            "ReserveTicket": {
+                "type": "object",
+                "properties": {
+                    "functionId": {
+                        "type": "integer",
+                        "description": "ID de la función para la cual se reserva la boleta"
+                    },
+                    "buyer": {
+                        "type": "string",
+                        "description": "Nombre del comprador"
+                    }
+                },
+                "required": ["functionId", "buyer"]
+            },
+            "CreateMovie": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Título de la película"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Descripción de la película"
+                    },
+                    "duration": {
+                        "type": "integer",
+                        "description": "Duración de la película en minutos"
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "Categoría de la película"
+                    }
+                },
+                "required": ["title", "description", "duration", "category"]
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "paths": {
+        "/api/functions": {
+            "post": {
+                "description": "Crear una nueva función de cine",
+                "tags": ["Functions"],
+                "requestBody": {
+                    "description": "Datos de la función a crear",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateFunction"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Función creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Error al intentar crear la función"
+                    }
+                }
+            }
+        },
+        "/api/functions/{id}/availability": {
+            "get": {
+                "description": "Consultar la disponibilidad de sillas por función",
+                "tags": ["Functions"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la función",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Disponibilidad de sillas obtenida exitosamente"
+                    },
+                    "404": {
+                        "description": "Función no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/tickets/reserve": {
+            "post": {
+                "description": "Reservar una boleta para una función",
+                "tags": ["Tickets"],
+                "requestBody": {
+                    "description": "Datos de la reserva",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReserveTicket"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reserva creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Error al intentar realizar la reserva"
+                    }
+                }
+            }
+        },
+        "/api/movies": {
+            "post": {
+                "description": "Crear una nueva película",
+                "tags": ["Movies"],
+                "requestBody": {
+                    "description": "Datos de la película a crear",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateMovie"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Película creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Error al intentar crear la película"
+                    }
+                }
+            }
+        }
+    }
+}

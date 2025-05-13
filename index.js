@@ -5,8 +5,13 @@ const movieRouter = require('./src/infrastructure/routes/movie.routes');
 const functionRouter = require('./src/infrastructure/routes/function.routes');
 const ticketRouter = require('./src/infrastructure/routes/ticket.routes');
 const sequelize = require('./src/infrastructure/database/sequelize');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocs = require("./swagger.json");
 
 const app = express();
+
+// Swagger setup
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Middleware
 app.use(bodyParser.json());
